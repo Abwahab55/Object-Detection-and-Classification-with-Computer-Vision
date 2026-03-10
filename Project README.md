@@ -387,4 +387,4 @@ python utils/benchmark.py --source 0 --frames 100
 
 ---
 
-*Frankfurt University of Applied Sciences — Autonomous Intelligent Systems WS 24/25*
+*Frankfurt University of Applied Sciences — Autonomous Intelligent Systems WS 25/26*
