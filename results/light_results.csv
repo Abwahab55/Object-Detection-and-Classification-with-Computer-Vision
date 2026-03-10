@@ -1,0 +1,8 @@
+condition,ssd_conf,ssd_cx,ssd_cy,yolo_conf,yolo_cx,yolo_cy,tiny_conf,tiny_cx,tiny_cy
+Green obj / Green light,67,366,337,89,366,297,N/A,,
+Green obj / Neutral light,65,371,229,99,385,278,68,375,298
+Red obj / Red light,52,346,323,N/A,,,N/A,,
+Red obj / Neutral light,51,330,275,98,378,322,68,310,197
+Dimmed light,50,359,252,76,355,201,N/A,,
+Neutral light,50,375,167,90,375,203,68,374,207
+Against light source,69,344,168,88,345,195,51,355,173

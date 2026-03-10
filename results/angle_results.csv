@@ -1,0 +1,4 @@
+angle_deg,ssd_conf,ssd_cx,ssd_cy,yolo_conf,yolo_cx,yolo_cy,tiny_conf,tiny_cx,tiny_cy
+90,69,309,408,98,338,316,N/A,,
+65,68,310,308,98,340,176,68,311,359
+45,63,815,127,86,342,81,52,336,83
