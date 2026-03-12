@@ -1,13 +1,4 @@
-# ODT-1 — Object Detection and Classification with Computer Vision
-
-> **Course:** Autonomous Intelligent Systems — WS 25/26  
-> **Institution:** Frankfurt University of Applied Sciences (FRA-UAS)  
-> **Guided by:** Prof. Peter Nauth  
-> **Group:** ODT-1  
-> **Authors:** Abdul WAHAB (1447523) · Muhammad Faraz Abbasi (1566440)  
-> **Submission Date:** 20 March 2025  
-
----
+ Object Detection and Classification with Computer Vision
 
 ## Table of Contents
 
