@@ -1,4 +1,4 @@
- Object Detection and Classification with Computer Vision
+ ## Object Detection and Classification with Computer Vision
 
 ## Table of Contents
 
