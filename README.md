@@ -376,6 +376,4 @@ python utils/benchmark.py --source 0 --frames 100
 6. A. Bochkovskiy et al., "YOLOv4: Optimal Speed and Accuracy of Object Detection," arXiv:2004.10934, 2020.
 7. Z. Zhao et al., "Object Detection With Deep Learning: A Review," IEEE TNNLS, vol. 30, no. 11, 2019.
 
----
 
-*Frankfurt University of Applied Sciences — Autonomous Intelligent Systems WS 25/26*
