@@ -67,12 +67,12 @@ The system detects objects in live video, outputs bounding boxes, confidence sco
 ```
 ODT-1_ObjectDetection/
 │
-├── models/
+├── Detectors/
 │   ├── yolov3_detector.py          # YOLOv3 real-time detector (3 weight sizes)
 │   ├── tiny_yolov3_detector.py     # Tiny-YOLOv3 real-time detector
 │   └── ssd_mobilenetv3_detector.py # SSD-MobileNetV3 real-time detector
 │
-├── utils/
+├── Evaluate/
 │   ├── evaluate.py                 # Reproduces all results from the final report
 │   └── benchmark.py                # FPS comparison across all models
 │
@@ -170,17 +170,20 @@ weights/
 
 ## Running the Detectors
 
-All detectors open a webcam window and print detected objects with their **center coordinates** to the console — ready for forwarding to a robot arm controller.
+All detectors open a webcam window. Use `--verbose` to also print detected objects with their **center coordinates** to the console — ready for forwarding to a robot arm controller.
 
 ### YOLOv3
 
 ```bash
 # Default (416×416 input, webcam 0)
-python models/yolov3_detector.py
+python Detectors/yolov3_detector.py
 
 # With custom input size and source
-python models/yolov3_detector.py --size 320 --source 0
-python models/yolov3_detector.py --size 608 --source video.mp4
+python Detectors/yolov3_detector.py --size 320 --source 0
+python Detectors/yolov3_detector.py --size 608 --source video.mp4
+
+# Enable console output of detections
+python Detectors/yolov3_detector.py --size 416 --source 0 --verbose
 ```
 
 `--size` options: `320`, `416`, `608`
@@ -188,15 +191,17 @@ python models/yolov3_detector.py --size 608 --source video.mp4
 ### Tiny-YOLOv3
 
 ```bash
-python models/tiny_yolov3_detector.py
-python models/tiny_yolov3_detector.py --source 0
+python Detectors/tiny_yolov3_detector.py
+python Detectors/tiny_yolov3_detector.py --source 0
+python Detectors/tiny_yolov3_detector.py --source 0 --verbose
 ```
 
 ### SSD-MobileNetV3
 
 ```bash
-python models/ssd_mobilenetv3_detector.py
-python models/ssd_mobilenetv3_detector.py --source 0
+python Detectors/ssd_mobilenetv3_detector.py
+python Detectors/ssd_mobilenetv3_detector.py --source 0
+python Detectors/ssd_mobilenetv3_detector.py --source 0 --verbose
 ```
 
 ### Console output format (all models)
@@ -215,7 +220,7 @@ Press **`q`** to quit any detector window.
 Reproduces **all quantitative results** from the final report (Sections 5.1–5.5):
 
 ```bash
-python utils/evaluate.py
+python Evaluate/evaluate.py
 ```
 
 This prints all result tables to the console and exports **5 CSV files** to `results/`:
@@ -235,7 +240,7 @@ This prints all result tables to the console and exports **5 CSV files** to `res
 Compare FPS and inference time across all available models on your machine:
 
 ```bash
-python utils/benchmark.py --source 0 --frames 100
+python Evaluate/benchmark.py --source 0 --frames 100
 ```
 
 ---

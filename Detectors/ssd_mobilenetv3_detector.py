@@ -107,12 +107,13 @@ def draw_detections(frame, class_ids, confidences, boxes, class_names,
 # ─────────────────────────────────────────────
 # Main — Real-Time Detection
 # ─────────────────────────────────────────────
-def main(source: int = 0):
+def main(source: int = 0, verbose: bool = False):
     for path in (SSD_PBTXT, SSD_PB, COCO_NAMES):
         if not os.path.isfile(path):
             raise FileNotFoundError(
                 f"Required file not found: {path}\n"
-                "Please download model weights — see README.md for instructions."
+                f"Place the file at: {os.path.abspath(path)}\n"
+                "Download model weights — see README.md for instructions."
             )
 
     class_names = load_class_names(COCO_NAMES)
@@ -139,10 +140,11 @@ def main(source: int = 0):
         cv2.imshow("SSD-MobileNetV3 | ODT-1", frame)
 
         # Output for robot arm controller
-        for i in range(len(boxes)):
-            name = class_names[ids[i]] if ids[i] < len(class_names) else "unknown"
-            print(f"  [{name}]  conf={confs[i]*100:.1f}%  "
-                  f"cx={cx[i]}  cy={cy[i]}")
+        if verbose:
+            for i in range(len(boxes)):
+                name = class_names[ids[i]] if ids[i] < len(class_names) else "unknown"
+                print(f"  [{name}]  conf={confs[i]*100:.1f}%  "
+                      f"cx={cx[i]}  cy={cy[i]}")
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
@@ -154,9 +156,11 @@ def main(source: int = 0):
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser(description="SSD-MobileNetV3 Real-Time Detector — ODT-1")
-    p.add_argument("--source", default=0,
+    p.add_argument("--source",  default=0,
                    help="Camera index or video file path (default: 0)")
+    p.add_argument("--verbose", action="store_true",
+                   help="Print detection results to console each frame")
     args = p.parse_args()
     src = args.source if isinstance(args.source, str) and not args.source.isdigit() \
           else int(args.source)
-    main(source=src)
+    main(source=src, verbose=args.verbose)

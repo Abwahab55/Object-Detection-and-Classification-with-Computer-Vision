@@ -139,7 +139,7 @@ def draw_detections(frame, boxes, confidences, class_ids, class_names, cx_list, 
 # ─────────────────────────────────────────────
 # Main — Real-Time Detection
 # ─────────────────────────────────────────────
-def main(input_size: int = 416, source: int = 0):
+def main(input_size: int = 416, source: int = 0, verbose: bool = False):
     """
     Run YOLOv3 object detection on a live webcam feed.
 
@@ -149,6 +149,8 @@ def main(input_size: int = 416, source: int = 0):
         Network input resolution (320 | 416 | 608).
     source : int or str
         Camera index (0 = default webcam) or video file path.
+    verbose : bool
+        When True, print detection results to console each frame.
     """
     if input_size not in YOLOV3_CFGS:
         raise ValueError(f"Unsupported input size {input_size}. Choose 320, 416, or 608.")
@@ -159,7 +161,8 @@ def main(input_size: int = 416, source: int = 0):
         if not os.path.isfile(path):
             raise FileNotFoundError(
                 f"Required file not found: {path}\n"
-                "Please download model weights — see README.md for instructions."
+                f"Place the file at: {os.path.abspath(path)}\n"
+                "Download model weights — see README.md for instructions."
             )
 
     class_names = load_class_names(COCO_NAMES)
@@ -186,9 +189,10 @@ def main(input_size: int = 416, source: int = 0):
         cv2.imshow(f"YOLOv3-{input_size} | ODT-1", frame)
 
         # Print detections to console (for robot arm controller)
-        for i in range(len(boxes)):
-            print(f"  [{class_names[ids[i]]}]  conf={confs[i]*100:.1f}%  "
-                  f"cx={cx[i]}  cy={cy[i]}")
+        if verbose:
+            for i in range(len(boxes)):
+                print(f"  [{class_names[ids[i]]}]  conf={confs[i]*100:.1f}%  "
+                      f"cx={cx[i]}  cy={cy[i]}")
 
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
@@ -200,12 +204,14 @@ def main(input_size: int = 416, source: int = 0):
 if __name__ == "__main__":
     import argparse
     p = argparse.ArgumentParser(description="YOLOv3 Real-Time Object Detector — ODT-1")
-    p.add_argument("--size",   type=int, default=416, choices=[320, 416, 608],
+    p.add_argument("--size",    type=int, default=416, choices=[320, 416, 608],
                    help="Network input size (default: 416)")
-    p.add_argument("--source", default=0,
+    p.add_argument("--source",  default=0,
                    help="Camera index or video file path (default: 0)")
+    p.add_argument("--verbose", action="store_true",
+                   help="Print detection results to console each frame")
     args = p.parse_args()
 
     src = args.source if isinstance(args.source, str) and not args.source.isdigit() \
           else int(args.source)
-    main(input_size=args.size, source=src)
+    main(input_size=args.size, source=src, verbose=args.verbose)
