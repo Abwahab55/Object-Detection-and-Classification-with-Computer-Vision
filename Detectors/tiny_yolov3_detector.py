@@ -16,147 +16,100 @@ import numpy as np
 import time
 import os
 
-# ─────────────────────────────────────────────
-# Configuration
-# ─────────────────────────────────────────────
-WEIGHTS_DIR  = os.path.join(os.path.dirname(__file__), "..", "weights")
-COCO_NAMES   = os.path.join(WEIGHTS_DIR, "coco.names")
-TINY_CFG     = os.path.join(WEIGHTS_DIR, "yolov3-tiny.cfg")
-TINY_WEIGHTS = os.path.join(WEIGHTS_DIR, "yolov3-tiny.weights")
 
-CONFIDENCE_THRESHOLD = 0.5
-NMS_THRESHOLD        = 0.3
+def load_yolo_model(config_path, weights_path):
+    """
+    Loads the Tiny-YOLOv3 model.
 
+    Args:
+        config_path (str): Path to the YOLO configuration file (.cfg).
+        weights_path (str): Path to the YOLO weights file (.weights).
 
-# ─────────────────────────────────────────────
-# Helpers  (shared logic with YOLOv3)
-# ─────────────────────────────────────────────
-def load_class_names(path: str) -> list:
-    with open(path, "r") as f:
-        return [line.strip() for line in f.readlines()]
-
-
-def get_output_layers(net):
-    layer_names  = net.getLayerNames()
-    unconnected  = net.getUnconnectedOutLayers()
-    if isinstance(unconnected[0], (list, np.ndarray)):
-        return [layer_names[i[0] - 1] for i in unconnected]
-    return [layer_names[i - 1] for i in unconnected]
-
-
-def run_inference(net, frame: np.ndarray, input_size: int = 416):
-    h, w = frame.shape[:2]
-    blob = cv2.dnn.blobFromImage(
-        frame, 1 / 255.0, (input_size, input_size),
-        swapRB=True, crop=False
-    )
-    net.setInput(blob)
-    t0             = time.time()
-    layer_outputs  = net.forward(get_output_layers(net))
-    inference_time = time.time() - t0
-
-    boxes, confidences, class_ids = [], [], []
-    cx_list, cy_list = [], []
-
-    for output in layer_outputs:
-        for detection in output:
-            scores     = detection[5:]
-            class_id   = int(np.argmax(scores))
-            confidence = float(scores[class_id])
-
-            if confidence < CONFIDENCE_THRESHOLD:
-                continue
-
-            cx = int(detection[0] * w)
-            cy = int(detection[1] * h)
-            bw = int(detection[2] * w)
-            bh = int(detection[3] * h)
-            x  = cx - bw // 2
-            y  = cy - bh // 2
-
-            boxes.append([x, y, bw, bh])
-            confidences.append(confidence)
-            class_ids.append(class_id)
-            cx_list.append(cx)
-            cy_list.append(cy)
-
-    indices = cv2.dnn.NMSBoxes(
-        boxes, confidences, CONFIDENCE_THRESHOLD, NMS_THRESHOLD
-    )
-
-    final_boxes, final_conf, final_ids = [], [], []
-    final_cx,    final_cy              = [], []
-
-    if len(indices) > 0:
-        for i in indices.flatten():
-            final_boxes.append(boxes[i])
-            final_conf.append(confidences[i])
-            final_ids.append(class_ids[i])
-            final_cx.append(cx_list[i])
-            final_cy.append(cy_list[i])
-
-    return final_boxes, final_conf, final_ids, final_cx, final_cy, inference_time
-
-
-def draw_detections(frame, boxes, confidences, class_ids, class_names, cx_list, cy_list):
-    np.random.seed(7)
-    colors = np.random.randint(0, 255, size=(len(class_names), 3), dtype="uint8")
-
-    for i, box in enumerate(boxes):
-        x, y, bw, bh = box
-        color = [int(c) for c in colors[class_ids[i]]]
-        label = f"{class_names[class_ids[i]]}: {confidences[i]*100:.1f}%"
-        coord = f"cx={cx_list[i]}, cy={cy_list[i]}"
-
-        cv2.rectangle(frame, (x, y), (x + bw, y + bh), color, 2)
-        cv2.putText(frame, label, (x, y - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-        cv2.putText(frame, coord, (x, y + bh + 15),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.4, color, 1)
-    return frame
-
-
-# ─────────────────────────────────────────────
-# Main
-# ─────────────────────────────────────────────
-def main(source: int = 0):
-    for path in (TINY_CFG, TINY_WEIGHTS, COCO_NAMES):
-        if not os.path.isfile(path):
-            raise FileNotFoundError(
-                f"Required file not found: {path}\n"
-                "Please download model weights — see README.md for instructions."
-            )
-
-    class_names = load_class_names(COCO_NAMES)
-    net = cv2.dnn.readNetFromDarknet(TINY_CFG, TINY_WEIGHTS)
+    Returns:
+        net: Loaded DNN model.
+    """
+    net = cv2.dnn.readNet(weights_path, config_path)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
     net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
+    return net
 
+
+def detect_objects_yolo(net, source, confidence_threshold=0.5, nms_threshold=0.4):
+    """
+    Performs object detection using Tiny-YOLOv3 on a video source.
+
+    Args:
+        net: Loaded YOLO DNN model.
+        source (int or str): Video source (e.g., webcam index or video file path).
+        confidence_threshold (float): Minimum confidence for detections.
+        nms_threshold (float): Non-maximum suppression threshold.
+
+    Returns:
+        None
+    """
+    # Initialize video capture
     cap = cv2.VideoCapture(source)
     if not cap.isOpened():
-        raise RuntimeError(f"Cannot open video source: {source}")
+        print(f"Error: Unable to open video source {source}")
+        return
 
-    print("[Tiny-YOLOv3] Running — press 'q' to quit")
+    # Load class labels
+    class_labels = []
+    with open("coco.names", "r") as f:
+        class_labels = f.read().strip().split("\n")
 
+    # Get output layer names
+    layer_names = net.getLayerNames()
+    output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+
+    print("Starting object detection...")
     while True:
         ret, frame = cap.read()
         if not ret:
+            print("Error: Unable to read frame from source.")
             break
 
-        boxes, confs, ids, cx, cy, t = run_inference(net, frame)
-        frame = draw_detections(frame, boxes, confs, ids, class_names, cx, cy)
+        # Prepare the frame for YOLO
+        blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416), swapRB=True, crop=False)
+        net.setInput(blob)
+        outputs = net.forward(output_layers)
 
-        fps_label = f"FPS: {1/t:.1f}" if t > 0 else "FPS: --"
-        cv2.putText(frame, fps_label, (10, 25),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        # Process detections
+        boxes = []
+        confidences = []
+        class_ids = []
+        h, w = frame.shape[:2]
 
-        cv2.imshow("Tiny-YOLOv3 | ODT-1", frame)
+        for output in outputs:
+            for detection in output:
+                scores = detection[5:]
+                class_id = np.argmax(scores)
+                confidence = scores[class_id]
 
-        for i in range(len(boxes)):
-            print(f"  [{class_names[ids[i]]}]  conf={confs[i]*100:.1f}%  "
-                  f"cx={cx[i]}  cy={cy[i]}")
+                if confidence > confidence_threshold:
+                    box = detection[0:4] * np.array([w, h, w, h])
+                    center_x, center_y, width, height = box.astype("int")
+                    x = int(center_x - (width / 2))
+                    y = int(center_y - (height / 2))
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):
+                    boxes.append([x, y, int(width), int(height)])
+                    confidences.append(float(confidence))
+                    class_ids.append(class_id)
+
+        # Apply non-maximum suppression
+        indices = cv2.dnn.NMSBoxes(boxes, confidences, confidence_threshold, nms_threshold)
+
+        for i in indices.flatten():
+            x, y, w, h = boxes[i]
+            label = f"{class_labels[class_ids[i]]}: {confidences[i]:.2f}"
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.putText(frame, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+        # Display the frame
+        cv2.imshow("Tiny-YOLOv3 Object Detection", frame)
+
+        # Break the loop if 'q' is pressed
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
@@ -164,11 +117,28 @@ def main(source: int = 0):
 
 
 if __name__ == "__main__":
+    # Get the directory of the current script
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Paths to the model files
+    CONFIG_PATH = os.path.join(current_dir, "yolov3-tiny.cfg")
+    WEIGHTS_PATH = os.path.join(current_dir, "yolov3-tiny.weights")
+
+    # Argument parsing
     import argparse
-    p = argparse.ArgumentParser(description="Tiny-YOLOv3 Real-Time Detector — ODT-1")
-    p.add_argument("--source", default=0,
-                   help="Camera index or video file path (default: 0)")
-    args = p.parse_args()
-    src = args.source if isinstance(args.source, str) and not args.source.isdigit() \
-          else int(args.source)
-    main(source=src)
+    parser = argparse.ArgumentParser(description="Tiny-YOLOv3 Object Detection")
+    parser.add_argument("--source", type=str, default="0", help="Video source (default: 0 for webcam)")
+    args = parser.parse_args()
+
+    # Convert source to int if it's a webcam index
+    try:
+        source = int(args.source)
+    except ValueError:
+        source = args.source
+
+    # Load the model
+    print("Loading Tiny-YOLOv3 model...")
+    model = load_yolo_model(CONFIG_PATH, WEIGHTS_PATH)
+
+    # Run object detection
+    detect_objects_yolo(model, source, confidence_threshold=0.5, nms_threshold=0.4)
