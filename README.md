@@ -17,9 +17,6 @@ This project develops and evaluates a real-time object detection system using co
 
 The system processes live video streams, outputting **bounding boxes**, **confidence scores**, and **center coordinates (cx, cy)** that can be forwarded directly to a Robot Arm Controller. Three pre-trained models — all based on the **MS-COCO dataset (80 classes)** — are implemented and rigorously compared across five experimental conditions.
 
-**Authors:** Abdul Wahab & Muhammad Faraz Abbasi — Frankfurt University of Applied Sciences
-**Course:** Autonomous Intelligent Systems, WS 25/26 — Prof. Peter Nauth
-
 ---
 
 ## Models at a Glance
