@@ -351,7 +351,7 @@ python Evaluate/benchmark.py --source 0 --frames 100
 
 ## Acknowledgment
 
-Abdul Wahab and Muhammad Faraz Abbasi express their sincere gratitude to Prof. Peter Nauth for his expert guidance, constructive feedback, and unwavering encouragement throughout the Autonomous Intelligent Systems course (WS 25/26) at Frankfurt University of Applied Sciences. His deep expertise in intelligent systems and computer vision provided the intellectual foundation upon which this work was built. The authors further acknowledge the open-source contributions of the OpenCV and TensorFlow communities, and the pioneering researchers whose foundational work on object detection architectures — including YOLO, SSD, and MobileNet — served as the theoretical and practical cornerstones of this implementation.
+Authors express their sincere gratitude to the subject advisor for his expert guidance, constructive feedback, and unwavering encouragement throughout the Autonomous Intelligent Systems course at Frankfurt University of Applied Sciences. His deep expertise in intelligent systems and computer vision provided the intellectual foundation upon which this work was built. The authors further acknowledge the open-source contributions of the OpenCV and TensorFlow communities, and the pioneering researchers whose foundational work on object detection architectures — including YOLO, SSD, and MobileNet — served as the theoretical and practical cornerstones of this implementation.
 
 ---
 
