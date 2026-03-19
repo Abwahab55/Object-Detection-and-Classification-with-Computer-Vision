@@ -357,10 +357,34 @@ Abdul Wahab and Muhammad Faraz Abbasi express their sincere gratitude to Prof. P
 
 ## References
 
-1. J. Redmon et al., "You Only Look Once: Unified, Real-Time Object Detection," *IEEE CVPR*, 2016.
-2. J. Redmon, A. Farhadi, "YOLOv3: An Incremental Improvement," *arXiv:1804.02767*, 2018.
-3. W. Liu et al., "SSD: Single Shot MultiBox Detector," *ECCV*, 2016.
-4. A. G. Howard et al., "MobileNets: Efficient CNNs for Mobile Vision Applications," *arXiv:1704.04861*, 2017.
-5. S. Ren et al., "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks," *NIPS*, 2015.
-6. A. Bochkovskiy et al., "YOLOv4: Optimal Speed and Accuracy of Object Detection," *arXiv:2004.10934*, 2020.
-7. Z. Zhao et al., "Object Detection With Deep Learning: A Review," *IEEE TNNLS*, vol. 30, no. 11, 2019.
+1.	D. G. Lowe, "Distinctive image features from scale-invariant keypoints," Int. J. of Comput. Vision, vol. 60, no. 2, pp. 91–110, 2004.
+2.	Z. Zhao, P. Zheng, S. Xu and X. Wu, "Object detection with deep learning: A review," IEEE Transactions on Neural Networks and Learning Systems, vol. 30, no. 11, pp. 3212–3232, Nov. 2019, doi: 10.1109/TNNLS.2018.2876865.
+3.	N. Dalal and B. Triggs, "Histograms of oriented gradients for human detection," in Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR), 2005.
+4.	R. Lienhart and J. Maydt, "An extended set of Haar-like features for rapid object detection," in Proc. IEEE Int. Conf. Image Processing (ICIP), 2002.
+5.	J. Loy, Neural Network Projects with Python. Birmingham, UK: Packt Publishing Limited, Feb. 2019, ISBN 9781789138900.
+6.	D. Cao, Z. Chen and L. Gao, "An improved object detection algorithm based on multi-scaled and deformable convolutional neural networks," Human-centric Computing and Information Sciences, vol. 10, no. 14, Apr. 2020.
+7.	H. Schneiderman and T. Kanade, "A statistical model for 3D object detection applied to faces and cars," in Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR), pp. 746–751, 2000.
+8.	F. Fleuret and D. Geman, "Stationary features and cat detection," Journal of Machine Learning Research (JMLR), vol. 9, pp. 2549–2578, 2008.
+9.	S. Romdhani, P. Torr, B. Schölkopf and A. Blake, "Computationally efficient face detection," in Proc. Eighth IEEE Int. Conf. Computer Vision (ICCV), vol. 2, pp. 695–700, 2001, doi: 10.1109/ICCV.2001.937694.
+10.	G. Alpaydin, "An adaptive deep neural network for detection and recognition of objects with long range auto surveillance," in Proc. IEEE Int. Conf. Semantic Computing (ICSC), pp. 316–317, 2018.
+11.	R. Girshick, J. Donahue, T. Darrell and J. Malik, "Rich feature hierarchies for accurate object detection and semantic segmentation," in Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR), Columbus, OH, pp. 580–587, Jun. 2014.
+12.	S. Ren, K. He, R. Girshick and J. Sun, "Faster R-CNN: Towards real-time object detection with region proposal networks," in Advances in Neural Information Processing Systems (NIPS), pp. 91–99, 2015.
+13.	P. Viola and M. Jones, "Robust real-time object detection," Int. Journal of Computer Vision (IJCV), vol. 57, Jul. 2001.
+14.	Z. Cai, Q. Fan, R. S. Feris and N. Vasconcelos, "A unified multi-scale deep convolutional neural network for fast object detection," in Proc. European Conf. Computer Vision (ECCV). Springer, pp. 354–370, 2016.
+15.	J. Redmon, S. Divvala, R. Girshick and A. Farhadi, "You only look once: Unified, real-time object detection," in Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR), pp. 779–788, Jun. 2016.
+16.	J. Redmon and A. Farhadi, "YOLOv3: An incremental improvement," arXiv preprint arXiv:1804.02767, 2018.
+17.	J. Redmon and A. Farhadi, "YOLO9000: Better, faster, stronger," in Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, pp. 7263–7271, 2017.
+18.	A. Bochkovskiy, C. Y. Wang and H. Y. M. Liao, "YOLOv4: Optimal speed and accuracy of object detection," arXiv preprint arXiv:2004.10934, 2020.
+19.	W. Liu, D. Anguelov, D. Erhan, C. Szegedy, S. Reed, C. Y. Fu and A. C. Berg, "SSD: Single shot multibox detector," in Proc. 14th European Conf. Computer Vision (ECCV), Amsterdam, The Netherlands, pp. 21–37, Oct. 2016.
+20.	K. M. He, X. Y. Zhang, S. Q. Ren and J. Sun, "Spatial pyramid pooling in deep convolutional networks for visual recognition," IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 37, pp. 1904–1916, 2015.
+21.	J. Deng, X. Xuan, W. Wang, Z. Li, H. Yao and Z. Wang, "A review of research on object detection based on deep learning," Journal of Physics: Conference Series, vol. 1684, 012028, 2020.
+22.	A. G. Howard, M. Zhu, B. Chen, D. Kalenichenko, W. Wang, T. Weyand, M. Andreetto and H. Adam, "MobileNets: Efficient convolutional neural networks for mobile vision applications," arXiv preprint arXiv:1704.04861, 2017.
+23.	S. K. Chadalawada, "Real time object detection and recognition using deep learning methods," M.S. thesis, Dept. Computer Science and Engineering, Blekinge Institute of Technology, Karlskrona, Sweden, Feb. 2020.
+24.	M. R. Sri Sai, S. Rella and S. Veeravalli, "Object detection and identification," Project Report, Nov. 2019. [Online]. Available: https://www.researchgate.net/publication/337464355
+25.	P. F. Felzenszwalb, R. B. Girshick, D. McAllester and D. Ramanan, "Object detection with discriminatively trained part-based models," IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 32, no. 9, p. 1627, 2010.
+26.	K. K. Sung and T. Poggio, "Example-based learning for view-based human face detection," IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 20, no. 1, pp. 39–51, 2002.
+27.	C. Wojek, P. Dollár, B. Schiele and P. Perona, "Pedestrian detection: An evaluation of the state of the art," IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 34, no. 4, p. 743, 2012.
+28.	H. Kobatake and Y. Yoshinaga, "Detection of spicules on mammogram based on skeleton analysis," IEEE Transactions on Medical Imaging, vol. 15, no. 3, pp. 235–245, 1996.
+29.	J. Hui, "SSD object detection: Single shot multibox detector for real-time processing," Medium.com, Mar. 2018. [Online]. Available: https://jonathan-hui.medium.com/ssd-object-detection-single-shot-multibox-detector-for-real-time-processing-9bd8deac0e06
+30.	V. Jain, "Everything you need to know about MobileNetV3," Towards Data Science, Nov. 2019. [Online]. Available: https://towardsdatascience.com.
+
