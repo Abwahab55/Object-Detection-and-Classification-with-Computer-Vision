@@ -388,3 +388,9 @@ Authors express their sincere gratitude to the subject advisor for his expert gu
 29.	J. Hui, "SSD object detection: Single shot multibox detector for real-time processing," Medium.com, Mar. 2018. [Online]. Available: https://jonathan-hui.medium.com/ssd-object-detection-single-shot-multibox-detector-for-real-time-processing-9bd8deac0e06
 30.	V. Jain, "Everything you need to know about MobileNetV3," Towards Data Science, Nov. 2019. [Online]. Available: https://towardsdatascience.com.
 
+---
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+Copyright (c) 2026 Abdul Wahab
+
